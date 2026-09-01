@@ -325,7 +325,7 @@ h1, h2, h3 {
 }
 .about p + p { margin-top: 14px; }
 .about figure { border: 1px solid rgba(233, 234, 235, .18); }
-.about img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.about img { display: block; width: 100%; height: auto; }
 
 /* Vises bare om assets/verksted.jpg mangler — se README-drift.md */
 .photo-placeholder {
