@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /send.php
+Disallow: /takk.html
+
+Sitemap: https://www.askade.no/sitemap.xml

@@ -1,0 +1,67 @@
+# Ålesund Skadesenter AS — serveroppsett for Apache (Domene.no Web5).
+# Fjern blokker du ikke trenger; alt står i «IfModule» så siden ikke faller
+# ned om en modul mangler.
+
+Options -Indexes
+DirectoryIndex index.html
+
+# ── Opplasting: seks komprimerte bilder (~600 kB hver) må få plass ──────────
+<IfModule mod_php.c>
+  php_value upload_max_filesize 8M
+  php_value post_max_size 20M
+  php_value max_file_uploads 10
+</IfModule>
+
+# Nyere PHP-versjoner hos Domene.no leser .user.ini i stedet — se README-drift.md.
+
+# ── Tving https og www ─────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  RewriteCond %{HTTP_HOST} ^askade\.no$ [NC]
+  RewriteRule ^ https://www.askade.no%{REQUEST_URI} [L,R=301]
+
+  # Skjul filendelsene: /personvern i stedet for /personvern.html
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^([^.]+)$ $1.html [L]
+</IfModule>
+
+# ── Sikkerhetsoverskrifter ─────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=15552000"
+
+  # Skjemaloggen (spamteller) skal aldri kunne leses utenfra
+  <FilesMatch "^\.">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_authz_core.c>
+  <DirectoryMatch "\.skjemalogg">
+    Require all denied
+  </DirectoryMatch>
+</IfModule>
+
+# ── Mellomlagring ──────────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType text/css                  "access plus 7 days"
+  ExpiresByType application/javascript    "access plus 7 days"
+  ExpiresByType image/png                 "access plus 6 months"
+  ExpiresByType image/jpeg                "access plus 6 months"
+  ExpiresByType font/woff2                "access plus 1 year"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json
+</IfModule>
+
+AddDefaultCharset UTF-8

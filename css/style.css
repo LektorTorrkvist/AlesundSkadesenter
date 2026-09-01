@@ -1,0 +1,665 @@
+@import url("fonts.css");
+
+/* ==========================================================================
+   Ålesund Skadesenter AS — Skisse A "Mørk fasade"
+   Tokens hentet fra Industry-designsystemet, tilpasset den mørke varianten.
+   ========================================================================== */
+
+:root {
+  --bg: #1b1f23;
+  --bg-sunk: rgba(15, 18, 21, .66);
+  --ink: #e9eaeb;
+  --ink-80: rgba(233, 234, 235, .80);
+  --ink-72: rgba(233, 234, 235, .72);
+  --ink-62: rgba(233, 234, 235, .62);
+  --ink-55: rgba(233, 234, 235, .55);
+  --ink-45: rgba(233, 234, 235, .45);
+  --ink-22: rgba(233, 234, 235, .22);
+
+  --line: rgba(233, 234, 235, .16);
+  --line-soft: rgba(233, 234, 235, .14);
+  --line-strong: rgba(233, 234, 235, .22);
+  --line-input: rgba(233, 234, 235, .25);
+  --line-btn: rgba(233, 234, 235, .30);
+  --fill-input: rgba(233, 234, 235, .06);
+
+  --accent: #5980a6;
+  --accent-300: #b5d9fd;
+  --accent-600: #597ea3;
+  --accent-700: #416180;
+  --on-accent: #12161a;
+
+  --danger: #ff9a8a;
+  --ok: #9fd8a8;
+
+  --font-heading: "Barlow Condensed", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, sans-serif;
+
+  --shell: 1280px;
+  --gutter: clamp(20px, 5vw, 72px);
+  --nav-h: 88px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
+  -webkit-text-size-adjust: 100%;
+}
+
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+
+a { color: var(--accent-300); text-underline-offset: 3px; }
+a:hover { color: #fff; }
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--accent-300); outline-offset: 2px; }
+::selection { background: rgba(89, 128, 166, .45); }
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* — hjelpere ————————————————————————————————————————————————— */
+
+.shell {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.kicker {
+  display: block;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent-300);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; color: var(--on-accent); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* — knapper ————————————————————————————————————————————————— */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 13px 24px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+}
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.btn-primary:hover { background: var(--accent-600); border-color: var(--accent-600); color: var(--on-accent); }
+.btn-primary:active { background: var(--accent-700); border-color: var(--accent-700); }
+
+.btn-secondary {
+  border-color: var(--line-btn);
+  color: var(--ink);
+}
+.btn-secondary:hover { background: rgba(233, 234, 235, .07); color: var(--ink); }
+.btn-secondary:active { background: rgba(233, 234, 235, .14); }
+
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+
+/* — toppmeny ————————————————————————————————————————————————— */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px max(var(--gutter), calc((100% - var(--shell)) / 2 + var(--gutter)));
+  background: rgba(27, 31, 35, .94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-brand { margin-right: auto; display: flex; align-items: center; }
+.nav-brand img { height: 50px; width: auto; }
+.nav-links {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  font-size: 14px;
+}
+.nav-links a { color: var(--ink); text-decoration: none; }
+.nav-links a:hover { color: var(--accent-300); }
+
+/* — toppfelt ————————————————————————————————————————————————— */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line-soft);
+}
+.hero-inner {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: clamp(56px, 8vw, 116px) var(--gutter) clamp(48px, 6vw, 88px);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: end;
+}
+.hero h1 {
+  font-size: clamp(44px, 7vw, 96px);
+  line-height: 1.12;
+  letter-spacing: .01em;
+  margin: 0;
+}
+.hero h1 span { display: block; }
+.hero .kicker { margin-bottom: 20px; letter-spacing: .14em; }
+.hero-lead {
+  font-size: 17px;
+  line-height: 29px;
+  max-width: 54ch;
+  margin: 28px 0 0;
+  color: var(--ink-80);
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+}
+
+/* godkjenningskort */
+.approval {
+  width: 212px;
+  padding: 20px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-sunk);
+}
+.approval-eyebrow {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent-300);
+}
+.approval-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 22px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+.approval-link {
+  display: block;
+  margin-top: 16px;
+  text-decoration: none;
+}
+.approval-link img { width: 100%; height: auto; }
+.approval-link span {
+  display: block;
+  font-size: 13px;
+  line-height: 20px;
+  margin-top: 12px;
+  color: var(--accent-300);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.approval-link:hover span { color: #fff; }
+.approval p {
+  font-size: 13px;
+  line-height: 20px;
+  margin: 6px 0 0;
+  color: var(--ink-62);
+}
+.approval-meta {
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 10px;
+  color: var(--ink-45);
+}
+
+/* — tjenester ————————————————————————————————————————————————— */
+
+.section { padding-bottom: clamp(56px, 7vw, 96px); scroll-margin-top: var(--nav-h); }
+.section-top { padding-top: clamp(56px, 7vw, 96px); }
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+.service { padding: 32px; }
+.service:not(:last-child) { border-right: 1px solid var(--line); }
+.service:first-child { padding-left: 0; }
+.service:last-child { padding-right: 0; }
+.service-no {
+  font-family: var(--font-heading);
+  font-size: 44px;
+  line-height: 1;
+  color: var(--ink-22);
+}
+.service h2 {
+  font-size: 26px;
+  line-height: 28px;
+  margin-top: 18px;
+}
+.service p {
+  font-size: 15px;
+  line-height: 25px;
+  margin: 14px 0 0;
+  color: var(--ink-72);
+}
+
+/* — om bedriften ————————————————————————————————————————————— */
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 32px clamp(28px, 5vw, 88px);
+  align-items: center;
+}
+.about h2 {
+  font-size: 38px;
+  line-height: 44px;
+}
+.about .kicker { margin-bottom: 18px; }
+.about p {
+  font-size: 15px;
+  line-height: 25px;
+  margin: 22px 0 0;
+  max-width: 48ch;
+  color: var(--ink-72);
+}
+.about p + p { margin-top: 14px; }
+.about figure { border: 1px solid rgba(233, 234, 235, .18); }
+.about img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+
+/* Vises bare om assets/verksted.jpg mangler — se README-drift.md */
+.photo-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 22px;
+  color: var(--ink-45);
+  background: rgba(233, 234, 235, .04);
+}
+.photo-placeholder code { font-size: 12px; color: var(--ink-62); }
+
+/* — bookingskjema ————————————————————————————————————————————— */
+
+.panel { border: 1px solid var(--line-strong); }
+.panel-head {
+  padding: 16px 26px;
+  border-bottom: 1px solid var(--line-strong);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.panel-head .tight { letter-spacing: .02em; }
+.panel-body { padding: clamp(24px, 4vw, 44px); }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+}
+.field-wide { grid-column: 1 / -1; }
+
+.field > label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: rgba(233, 234, 235, .70);
+}
+.field .req { color: var(--accent-300); }
+
+.input {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  caret-color: var(--accent-300);
+  background: var(--fill-input);
+  border: 1px solid var(--line-input);
+  border-radius: 0;
+}
+.input:hover { border-color: rgba(233, 234, 235, .45); }
+.input:focus-visible { border-color: var(--accent-300); outline-offset: 0; }
+textarea.input { min-height: 120px; resize: vertical; }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+
+.field-error {
+  display: none;
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 5px;
+  color: var(--danger);
+}
+.field-error.is-visible { display: block; }
+
+/* honeypot — skjult for folk, synlig for enkle roboter */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* bildefelt */
+.uploads {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line-strong);
+}
+.slot-btn {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 14px;
+  font: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  color: var(--ink-55);
+  background: rgba(233, 234, 235, .04);
+  border: 0;
+  cursor: pointer;
+}
+.slot-btn:hover { background: rgba(233, 234, 235, .08); color: var(--ink-80); }
+.slot-btn .slot-plus {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 30px;
+  line-height: 1;
+  color: var(--ink-45);
+}
+.slot-btn:hover .slot-plus { color: var(--accent-300); }
+.slot.has-image .slot-btn { display: none; }
+.slot-preview { display: none; }
+.slot.has-image .slot-preview { display: block; }
+.slot-preview img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.slot-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--ink);
+  background: rgba(15, 18, 21, .82);
+  border: 1px solid var(--line-btn);
+  cursor: pointer;
+}
+.slot-remove:hover { background: rgba(15, 18, 21, .95); }
+/* Instruksjonen står fast under hvert felt, slik at alle feltene får
+   samme høyde enten de er fylt ut eller ikke. */
+.slot-caption {
+  flex: 1;
+  padding: 10px;
+  border-top: 1px solid var(--line-strong);
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--ink-62);
+}
+.slot.has-image .slot-caption { color: var(--ink-80); }
+.slot-busy {
+  position: absolute;
+  inset: 0;
+  display: none;
+  place-items: center;
+  font-size: 12px;
+  color: var(--ink-80);
+  background: rgba(15, 18, 21, .78);
+}
+.slot.is-busy .slot-busy { display: grid; }
+
+.form-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.form-note {
+  font-size: 13px;
+  line-height: 22px;
+  margin: 0;
+  max-width: 46ch;
+  color: var(--ink-55);
+}
+
+.form-status {
+  margin-top: 18px;
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  font-size: 14px;
+  line-height: 22px;
+}
+.form-status[hidden] { display: none; }
+.form-status.is-error { border-color: var(--danger); color: var(--danger); }
+
+.sent h3 {
+  font-size: 28px;
+  margin: 0 0 12px;
+}
+.sent p {
+  font-size: 15px;
+  line-height: 25px;
+  margin: 0;
+  max-width: 52ch;
+  color: var(--ink-72);
+}
+.sent .btn { margin-top: 24px; }
+
+/* — kontakt ————————————————————————————————————————————————— */
+
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+.contact h2 {
+  font-size: 38px;
+  line-height: 44px;
+  margin-bottom: 26px;
+}
+.contact .kicker { margin-bottom: 18px; }
+.contact-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 14px 28px;
+  font-size: 15px;
+  line-height: 24px;
+}
+.contact-list dt {
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+.contact-list dd { margin: 0; }
+.contact-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.map { border: 1px solid var(--line-strong); }
+.map-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line-strong);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.map-head a { font-size: 12px; }
+.map-frame {
+  position: relative;
+  height: 440px;
+  background: rgba(233, 234, 235, .04);
+}
+.map-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) invert(.92) contrast(.9);
+}
+.map-consent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+.map-consent p {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 13px;
+  line-height: 21px;
+  color: var(--ink-62);
+}
+
+/* — bunn ————————————————————————————————————————————————— */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 0 44px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 22px;
+  color: var(--ink-62);
+}
+.footer img { height: 48px; width: auto; }
+.footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* — enkel innholdsside (personvern) ————————————————————————— */
+
+.prose { max-width: 68ch; padding: clamp(40px, 6vw, 72px) 0; }
+.prose h1 { font-size: clamp(34px, 5vw, 52px); line-height: 1.12; margin-bottom: 24px; }
+.prose h2 { font-size: 24px; line-height: 28px; margin: 36px 0 12px; }
+.prose p, .prose li { font-size: 15px; line-height: 26px; color: var(--ink-80); }
+.prose ul { padding-left: 20px; }
+.prose li { margin-bottom: 6px; }
+
+/* — smale skjermer ————————————————————————————————————————— */
+
+@media (max-width: 900px) {
+  .hero-grid,
+  .services,
+  .about,
+  .contact,
+  .form-grid { grid-template-columns: 1fr; }
+
+  .nav-links { display: none; }
+
+  .approval { width: 100%; max-width: 320px; }
+
+  .service { padding: 28px 0; border-right: 0; }
+  .service:not(:last-child) { border-bottom: 1px solid var(--line); }
+
+  .about h2, .contact h2 { font-size: 30px; line-height: 36px; }
+  .map-frame { height: 340px; }
+}
+
+@media (max-width: 520px) {
+  .nav-brand img { height: 38px; }
+  .btn { padding: 12px 18px; font-size: 14px; }
+  .hero-actions .btn, .contact-actions .btn { flex: 1 1 100%; }
+  .form-foot .btn { width: 100%; }
+}
