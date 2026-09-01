@@ -593,23 +593,6 @@ textarea.input { min-height: 120px; resize: vertical; }
   border: 0;
   filter: grayscale(1) invert(.92) contrast(.9);
 }
-.map-consent {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 14px;
-  padding: 24px;
-  text-align: center;
-}
-.map-consent p {
-  margin: 0;
-  max-width: 40ch;
-  font-size: 13px;
-  line-height: 21px;
-  color: var(--ink-62);
-}
 
 /* — bunn ————————————————————————————————————————————————— */
 

@@ -1,4 +1,4 @@
-/* Ålesund Skadesenter AS — bookingskjema, bildekomprimering og kartsamtykke.
+/* Ålesund Skadesenter AS — bookingskjema og bildekomprimering.
    Ingen rammeverk, ingen byggesteg. Fungerer uten JavaScript også, bortsett
    fra bildeopplasting (da får kunden beskjed om å ettersende bilder på e-post). */
 
@@ -285,27 +285,5 @@
       skjemaBoks.hidden = false;
       document.getElementById("navn").focus();
     });
-  }
-
-  /* ── Kart: lastes først når kunden trykker (ingen Google-kapsler før det) ── */
-
-  var kartboks = document.getElementById("kartboks");
-  var visKart = document.getElementById("visKart");
-  if (kartboks && visKart) {
-    visKart.addEventListener("click", function () {
-      var ramme = document.createElement("iframe");
-      ramme.src = kartboks.dataset.kart;
-      ramme.title = "Kart over Puskholevegen 47B, 6012 Ålesund";
-      ramme.loading = "lazy";
-      ramme.referrerPolicy = "no-referrer-when-downgrade";
-      ramme.setAttribute("allowfullscreen", "");
-      kartboks.innerHTML = "";
-      kartboks.appendChild(ramme);
-      try { localStorage.setItem("kart-ok", "1"); } catch (e) {}
-    });
-
-    try {
-      if (localStorage.getItem("kart-ok") === "1") visKart.click();
-    } catch (e) {}
   }
 })();

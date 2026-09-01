@@ -15,7 +15,7 @@ takk.html           Kvittering — vises bare for besøkende uten JavaScript
 send.php            Tar imot skjemaet og sender e-post med bildene som vedlegg
 css/style.css       All stil (importerer css/fonts.css)
 css/fonts.css       @font-face for Barlow — skriftene ligger lokalt
-js/main.js          Bildeopplasting, komprimering, validering, kartsamtykke
+js/main.js          Bildeopplasting, komprimering, validering
 fonts/              Barlow og Barlow Condensed (woff2, 183 kB til sammen)
 assets/             Logo, QR-kode, ikoner, delebilde
 .htaccess           https, www, sikkerhetsoverskrifter, mellomlagring
@@ -77,8 +77,8 @@ ligger i hver sin seksjon med tydelige `id`-er: `#tjenester`, `#om`, `#book`,
 ## Personvern
 
 Skjemaet lagres ikke på serveren — innholdet går rett videre som e-post.
-Kartet fra Google lastes først når den besøkende trykker «Vis kart», så det
-settes ingen informasjonskapsler før det. Skriftene ligger lokalt, så det går
+Kartet fra Google Maps lastes automatisk og setter informasjonskapsler fra
+Google. Skriftene ligger lokalt, så det går
 ingen forespørsel til Google Fonts. Det er ingen analyse- eller sporingsverktøy
 på siden. `personvern.html` beskriver dette — les den gjennom og rett hvis noe
 ikke stemmer med hvordan dere faktisk jobber.
