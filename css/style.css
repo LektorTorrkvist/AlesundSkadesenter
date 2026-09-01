@@ -281,8 +281,7 @@ h1, h2, h3 {
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line);
 }
-.service { padding: 32px; }
-.service:not(:last-child) { border-right: 1px solid var(--line); }
+.service { padding: 32px; border-right: 1px solid var(--line); }
 .service:first-child { padding-left: 0; }
 .service:last-child { padding-right: 0; }
 .service-no {
@@ -634,7 +633,7 @@ textarea.input { min-height: 120px; resize: vertical; }
   .approval { width: 100%; max-width: 320px; }
 
   .service { padding: 28px 0; border-right: 0; }
-  .service:not(:last-child) { border-bottom: 1px solid var(--line); }
+  .service { border-bottom: 1px solid var(--line); }
 
   .about h2, .contact h2 { font-size: 30px; line-height: 36px; }
   .map-frame { height: 340px; }
